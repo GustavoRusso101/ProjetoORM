@@ -101,7 +101,15 @@ namespace DataBase
 
         public void Excluir()
         {
-            throw new NotImplementedException();
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string sql = "delete from " + this.GetType().Name + "s where id="
+                    + this.Key + ";";
+                MySqlCommand cmd = new MySqlCommand(sql, connection);
+                cmd.Connection.Open();
+                cmd.ExecuteNonQuery();
+                cmd.Connection.Close();
+            }
         }
 
         public int Key
